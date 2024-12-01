@@ -14,7 +14,7 @@ const places = [
   "San Jose",
 ];
 
-const PlacesSearchDropdown = () => {
+const PlacesSearchDropdown = ({ onSelect }) => {
   const [search, setSearch] = useState("");
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
@@ -38,20 +38,21 @@ const PlacesSearchDropdown = () => {
   const handleSelect = (place) => {
     setSearch(place); // Set selected place to input
     setFilteredPlaces([]); // Clear dropdown
+    onSelect(place); // Notify parent about the selection
   };
 
   return (
-    <div className="relative w-64">
+    <div className="relative">
       {/* Search Input */}
       <div className="relative">
-      <input
-        type="text"
-        value={search}
-        onChange={handleSearch}
-        placeholder="Going In"
-        className="w-full px-8 py-3 border border-black rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
-      <FaMapMarkerAlt className="absolute top-3 text-lg left-2"/>
+        <input
+          type="text"
+          value={search}
+          onChange={handleSearch}
+          placeholder="Going In"
+          className="w-full px-10 py-3 placeholder:text-black border border-black rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+        <FaMapMarkerAlt className="absolute top-4 text-lg left-4" />
       </div>
 
       {/* Dropdown */}
