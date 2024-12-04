@@ -6,7 +6,7 @@ import { BsGlobe } from "react-icons/bs";
 const MainNav = () => {
   return (
     <div>
-        <div className='flex justify-around items-center shadow-lg border-b border-gray-400 py-4'>
+        <div className='flex justify-around items-center fixed top-0 w-full bg-white z-50 shadow-lg border-b border-gray-400 py-4'>
             <div className='flex justify-start items-center gap-4'>
                 <div className='flex justify-start items-center gap-3'>
                 <img src="/logo.png" alt="" className='w-8 h-8'/>

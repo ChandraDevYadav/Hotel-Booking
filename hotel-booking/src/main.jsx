@@ -5,6 +5,9 @@ import App from './App';
 import './index.css';
 import MainNav from './Compoments/Headers/MainNav';
 import MainFooter from './Compoments/Footers/MainFooter';
+import ChatDialog from './Compoments/ChatDialog/ChatDialog';
+import CookiesAlert from './Compoments/ChatDialog/CookiesAlert';
+import SignUpAlert from './Compoments/Home/SignUpAlert';
 
 const root = ReactDOM.createRoot(document.getElementById('root')); // Create root using correct API
 
@@ -17,8 +20,11 @@ root.render(
       }}
     >
       <MainNav/>
+      <SignUpAlert/>
+      {/* <CookiesAlert/> */}
       <App />
       <MainFooter/>
+      <ChatDialog/>
     </BrowserRouter>
   </React.StrictMode>
 );
