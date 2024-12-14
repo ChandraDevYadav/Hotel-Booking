@@ -30,6 +30,7 @@ import {
   MdOutlineLocalParking,
   MdOutlineRoofing,
 } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 // Mapping amenities to icons
 const amenityIcons = {
@@ -218,13 +219,13 @@ const HotelCard = ({ hotel }) => {
   };
 
   return (
-    <div className="bg-white grid grid-cols-6 mb-6 border border-gray-400 rounded-xl shadow-lg">
+    <Link to='/hoteldetail' className="bg-white grid grid-cols-6 border border-gray-400 rounded-xl shadow-lg">
       {/* Carousel for Hotel Images */}
-      <div className="col-span-2 relative">
+      <div className="col-span-6 md:col-span-2 relative">
         <img
           src={hotel.images[currentImage]}
           alt={hotel.name}
-          className="w-full h-full object-cover rounded-l-xl"
+          className="w-full h-full object-cover rounded-tl-xl md:rounded-tl-xl rounded-bl-none md:rounded-bl-xl rounded-tr-xl md:rounded-tr-none"
         />
         <button
           onClick={handlePrevImage}
@@ -246,7 +247,7 @@ const HotelCard = ({ hotel }) => {
       </div>
 
       {/* Hotel Info */}
-      <div className="px-4 py-4 col-span-4">
+      <div className="px-4 py-4 col-span-6 md:col-span-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-800">{hotel.name}</h2>
         </div>
@@ -267,11 +268,11 @@ const HotelCard = ({ hotel }) => {
         </div>
 
         <p className="text-xs font-semibold">{hotel.hotelTags}</p>
-        <p className="text-xs mt-1 font-medium text-gray-700 pr-60">
+        <p className="text-xs mt-1 font-medium text-gray-700 pr-4 md:pr-60">
           {hotel.description}
         </p>
 
-        <div className="flex justify-between items-end">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
           {/* Ratings */}
           <div>
             <p className="text-sm text-green-600 mb-6">{hotel.refundPolicy}</p>
@@ -291,8 +292,8 @@ const HotelCard = ({ hotel }) => {
           </div>
 
           {/* Pricing */}
-          <div className="mt-4 text-end">
-            <div className="flex justify-end items-baseline gap-1">
+          <div className="mt-4 text-start md:text-end">
+            <div className="flex justify-start md:justify-end items-baseline gap-1">
               <p className="line-through text-gray-800 font-medium text-sm">
                 {hotel.price}
               </p>
@@ -312,14 +313,14 @@ const HotelCard = ({ hotel }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
 // Hotel List Component
 const HotelList = () => {
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto">
       
       <div className="grid grid-cols-1 gap-6">
         {hotelData.map((hotel, index) => (

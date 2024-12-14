@@ -136,14 +136,14 @@ const faqData = [
 
 const FrequentlyAsked = () => {
     return (
-        <div className="p-6">
+        <div className="p-4 md:p-6">
             <div className="max-w-6xl mx-auto">
                 <div className="text-center">
                     <h1 className="font-bold mb-6">Don't see what you're looking for?</h1>
                     <a href='' className="px-6 py-2 border border-black text-blue-600 rounded-full font-semibold">View all properties</a>
-                    <p className="text-xs mt-8 font-medium">Lowest nightly price found within the past 24 hours based on a 1 night stay for 2 adults. <br /> Prices and availability subject to change. Additional terms may apply.</p>
+                    <p className="text-sm md:xs mt-8 font-medium">Lowest nightly price found within the past 24 hours based on a 1 night stay for 2 adults. <br className="hidden md:block"/> Prices and availability subject to change. Additional terms may apply.</p>
                 </div>
-                <div className="grid grid-cols-2 gap-4 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                     {faqData.map((faq, index) => (
                         <div
                             key={index}

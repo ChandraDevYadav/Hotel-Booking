@@ -44,7 +44,7 @@ const PlacesSearchDropdown = ({ onSelect }) => {
   return (
     <div className="relative">
       {/* Search Input */}
-      <div className="relative">
+      <div className="relative w-full">
         <input
           type="text"
           value={search}

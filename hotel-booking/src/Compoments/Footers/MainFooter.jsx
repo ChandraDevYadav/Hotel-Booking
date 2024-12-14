@@ -56,7 +56,7 @@ const footerData = [
 
 const MainFooter = () => {
   return (
-    <div className="bg-[#eff3f7] text-black px-44 py-8">
+    <div className="bg-[#eff3f7] text-black px-4 md:px-44 py-8">
       <h1 className='pl-4 mb-6 text-xl font-bold'>StayEase Group</h1>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

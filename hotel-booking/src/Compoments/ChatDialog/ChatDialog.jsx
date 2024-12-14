@@ -94,7 +94,7 @@ const ChatDialog = () => {
             {/* Dialog - Appears when isOpen is true */}
             {isOpen && (
                 <div
-                    className="fixed bottom-4 right-4 w-[27rem] rounded-lg bg-white shadow-lg"
+                    className="fixed bottom-4 right-5 w-[22rem] md:w-[27rem] rounded-lg bg-white shadow-lg"
                     role="dialog"
                 >
                     {/* Header */}

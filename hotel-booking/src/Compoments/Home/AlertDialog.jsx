@@ -22,11 +22,11 @@ const AlertDialog = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
+    <div className="flex items-center justify-center w-full">
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="pl-4 pr-14 py-[1px] bg-white border border-black rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex justify-start items-center gap-3"
+        className="pl-4 pr-14 py-[1px] w-full bg-white border border-black rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex justify-start items-center gap-3"
       >
         <FaUser/>
         <div className="text-start">

@@ -11,32 +11,34 @@ const Search = () => {
   };
 
   return (
-    <div className="px-44 py-3">
+    <div className="px-4 md:px-44 py-3 md:py-3">
       <h1 className="text-5xl font-semibold mt-4">Family Hotels</h1>
-      <div className="flex justify-around items-center gap-4 mt-6">
+      <div className="flex flex-col md:flex-row justify-around items-center gap-6 mt-6">
         {/* Location Dropdown */}
-        <div>
+        <div className="w-full">
           <PlacesSearchDropdown onSelect={(loc) => setLocation(loc)} />
         </div>
 
-        {/* Date Pickers */}
-        <div>
+        <div className="flex justify-between w-full gap-2">
+          {/* Date Pickers */}
+        <div className="w-full">
           <EnhancedDatePicker type="Check-In" />
         </div>
-        <div>
+        <div className="w-full">
           <EnhancedDatePicker type="Check-Out" />
+        </div>
         </div>
 
         {/* Room Selector */}
-        <div>
+        <div className="w-full">
           <AlertDialog />
         </div>
 
         {/* Search Button */}
-        <div>
+        <div className="w-full">
           <button
             onClick={handleSearch}
-            className="py-3 px-20 rounded-full bg-blue-600 text-white hover:bg-blue-700"
+            className="py-3 px-20 w-full rounded-full bg-blue-600 text-white hover:bg-blue-700"
           >
             Search
           </button>

@@ -46,7 +46,7 @@ const SignUpAlert = () => {
     isVisible && (
       <div
         ref={alertRef} // Attach the reference to the alert div
-        className="fixed top-[4.4rem] right-32 transform w-[23rem] bg-white border border-gray-300 rounded-lg shadow-lg px-8 py-8 z-50"
+        className="fixed top-[4.4rem] right-3 md:right-32 transform w-[23rem] bg-white border border-gray-300 rounded-lg shadow-lg px-8 py-8 z-50"
       >
         {/* <div className="flex flex-col justify-center items-center">
           <img src="/logo.png" alt="" className="w-16 h-16" />

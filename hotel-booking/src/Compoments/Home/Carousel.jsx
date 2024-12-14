@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Carousel = () => {
     const destinations = [
@@ -109,8 +110,8 @@ const Carousel = () => {
   const handleMouseLeave = () => setShowButtons(false);
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-semibold mb-2 text-start px-40 py-3">Popular Destinations for Luxury Hotels</h1>
+    <div className="p-4 md:p-6">
+      <h1 className="text-3xl font-semibold mb-2 text-start px-4 md:px-40 py-3">Popular Destinations for Luxury Hotels</h1>
         <div
       className=" flex flex-col items-center justify-center"
       onMouseEnter={handleMouseEnter}
@@ -131,7 +132,7 @@ const Carousel = () => {
           {destinations
             .slice(currentIndex, currentIndex + visibleItems)
             .map((destination) => (
-              <div
+              <Link to='/about'
                 key={destination.id}
                 className="flex-shrink-0 transition-transform duration-500"
               >
@@ -158,7 +159,7 @@ const Carousel = () => {
                     </h2>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
         {/* Next Button */}

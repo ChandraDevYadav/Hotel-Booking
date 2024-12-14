@@ -1,5 +1,6 @@
 import React from "react";
 import { IoIosStar, IoIosStarOutline } from "react-icons/io"; // Import the stars
+import { Link } from "react-router-dom";
 
 const LuxuryHotels = () => {
     const hotels = [
@@ -130,14 +131,14 @@ const LuxuryHotels = () => {
   return (
     <div className="bg-gray-50 py-10">
       <h1 className="text-4xl font-bold text-center mb-8">Highest Rated Luxury Hotels</h1>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-8 px-4 md:px-0">
         {hotels.map((hotel) => (
-          <div
+          <Link to="/about"
             key={hotel.id}
-            className="bg-white shadow-lg border border-black rounded-xl overflow-hidden grid grid-cols-4 transition-transform transform"
+            className="bg-white shadow-lg border border-black rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-4 transition-transform transform"
           >
             {/* Image */}
-            <div>
+            <div className="">
               <img
                 src={hotel.image}
                 alt={hotel.title}
@@ -204,7 +205,7 @@ const LuxuryHotels = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

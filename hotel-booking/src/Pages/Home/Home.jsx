@@ -15,6 +15,7 @@ const Home = () => {
       <LuxuryHotels/>
       <FrequentlyAsked/>
       <HotelList/>
+      
     </div>
   )
 }

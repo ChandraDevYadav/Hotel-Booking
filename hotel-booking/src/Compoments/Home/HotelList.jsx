@@ -103,9 +103,9 @@ const HotelList = () => {
   const { topDestinations, topCities, themes } = hotelData;
 
   return (
-    <div className="px-44 pb-8">
-      <h1 className="text-sm font-medium text-blue-600 w-[24%] border-b-[3px] px-2 border-blue-600 pb-2">Explore a world of travel with StayEase</h1>
-      <div className="h-44 grid grid-cols-2 overflow-y-auto border-t p-4">
+    <div className="px-4 md:px-44 pb-8">
+      <h1 className="text-sm font-medium text-blue-600 -w-[100%] md:w-[24%] border-b-[3px] px-2 border-blue-600 pb-2">Explore a world of travel with StayEase</h1>
+      <div className="h-44 grid grid-cols-1 md:grid-cols-2 overflow-y-auto border-t p-4">
         {/* Themes */}
         <div>
           <h2 className="text-lg font-bold mb-2">Themes</h2>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import HotelSearchPage from "../../Compoments/About/HotelSearchPage";
 import AboutMain from "../../Compoments/About/AboutMain";
 
 const hotelFilters = [
@@ -114,10 +113,10 @@ const hotelFilters = [
   },
 ];
 
-
 const About = () => {
   const [appliedFilters, setAppliedFilters] = useState({});
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
+  const [dialogCategory, setDialogCategory] = useState(null); // Track the open dialog
 
   // Handle Checkbox and Radio Filter Changes
   const handleFilterChange = (category, filterName, isChecked) => {
@@ -145,13 +144,64 @@ const About = () => {
     }));
   };
 
+  const closeDialog = () => setDialogCategory(null);
+
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 md:p-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Hotel Filters</h1>
-        <div className="flex space-x-4">
+        <div className="block md:hidden">
+          {/* Mobile and Tablet Filters */}
+          <div className="">
+            {/* <h1 className="text-2xl font-bold mb-4 block md:hidden">Filters</h1> */}
+          <div className="flex  overflow-x-scroll gap-2 mb-4">
+            {hotelFilters.map((filterCategory, index) => (
+              <div key={index} className="mb-2">
+                <button
+                  onClick={() => setDialogCategory(filterCategory.category)}
+                  className="text-center w-40 p-2 bg-blue-600 text-white font-semibold rounded"
+                >
+                  {filterCategory.category}
+                </button>
+                {dialogCategory === filterCategory.category && (
+                  <div
+                    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                    onClick={closeDialog}
+                  >
+                    <div
+                      className="bg-white rounded shadow-lg p-4 w-3/4 max-h-3/4 overflow-auto"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <h2 className="text-lg font-semibold mb-2">
+                        {filterCategory.category}
+                      </h2>
+                      {filterCategory.filters.map((filter, i) => (
+                        <FilterItem
+                          key={i}
+                          filter={filter}
+                          category={filterCategory.category}
+                          appliedFilters={appliedFilters}
+                          priceRange={priceRange}
+                          onFilterChange={handleFilterChange}
+                          onPriceChange={handlePriceChange}
+                        />
+                      ))}
+                      <button
+                        onClick={closeDialog}
+                        className="mt-4 w-full bg-blue-500 text-white py-2 rounded"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-5 space-x-0 md:space-x-4">
           {/* Filters Sidebar */}
-          <div className="w-1/4 bg-white p-4 shadow rounded">
+          <div className="col-span-1 bg-white p-0 md:p-4 shadow rounded hidden md:block">
             {hotelFilters.map((filterCategory, index) => (
               <Filter
                 key={index}
@@ -164,9 +214,9 @@ const About = () => {
             ))}
           </div>
           {/* Filtered Results */}
-          <div className="flex-1 bg-white p-4 shadow rounded">
+          <div className="md:col-span-4">
             <FilteredResults appliedFilters={appliedFilters} priceRange={priceRange} />
-          </div>
+          </div>          
         </div>
       </div>
     </div>
@@ -174,24 +224,22 @@ const About = () => {
 };
 
 // Filter Component
-const Filter = ({ category, appliedFilters, priceRange, onFilterChange, onPriceChange }) => {
-  return (
-    <div className="mb-6">
-      <h2 className="text-lg font-semibold mb-2">{category.category}</h2>
-      {category.filters.map((filter, index) => (
-        <FilterItem
-          key={index}
-          filter={filter}
-          category={category.category}
-          appliedFilters={appliedFilters}
-          priceRange={priceRange}
-          onFilterChange={onFilterChange}
-          onPriceChange={onPriceChange}
-        />
-      ))}
-    </div>
-  );
-};
+const Filter = ({ category, appliedFilters, priceRange, onFilterChange, onPriceChange }) => (
+  <div className="mb-6">
+    <h2 className="text-lg font-semibold mb-2">{category.category}</h2>
+    {category.filters.map((filter, index) => (
+      <FilterItem
+        key={index}
+        filter={filter}
+        category={category.category}
+        appliedFilters={appliedFilters}
+        priceRange={priceRange}
+        onFilterChange={onFilterChange}
+        onPriceChange={onPriceChange}
+      />
+    ))}
+  </div>
+);
 
 // FilterItem Component
 const FilterItem = ({ filter, category, appliedFilters, priceRange, onFilterChange, onPriceChange }) => {
@@ -234,16 +282,10 @@ const FilterItem = ({ filter, category, appliedFilters, priceRange, onFilterChan
 };
 
 // FilteredResults Component
-const FilteredResults = ({ appliedFilters, priceRange }) => {
-  return (
-    <div>
-      {/* <h2 className="text-xl font-semibold mb-4">Filtered Results</h2>
-      <pre className="bg-gray-100 p-4 rounded text-sm">
-        {JSON.stringify({ appliedFilters, priceRange }, null, 2)}
-      </pre> */}
-      <AboutMain/>
-    </div>
-  );
-};
+const FilteredResults = ({ appliedFilters, priceRange }) => (
+  <div>
+    <AboutMain />
+  </div>
+);
 
 export default About;
