@@ -1,65 +1,126 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { FaAngleDown, FaCar, FaHotel, FaTruckPlane, FaVrCardboard } from "react-icons/fa6";
+import { GiCommercialAirplane, GiCruiser } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative inline-block text-left">
+    <div ref={dropdownRef} className="relative inline-block text-left">
       {/* Dropdown Trigger */}
       <button
         onClick={toggleDropdown}
-        className="inline-flex justify-center w-full text-sm font-medium text-gray-700"
+        className="flex items-center gap-1 justify-start w-full text-sm font-medium text-gray-800"
       >
-        Options
-        <svg
-          className="-mr-1 ml-2 h-5 w-5"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 11.586l3.71-4.356a.75.75 0 011.14.976l-4 4.5a.75.75 0 01-1.14 0l-4-4.5a.75.75 0 01.02-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <span>Shop travel</span>
+        <FaAngleDown className="text-xs mt-[2px]" />
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="absolute mt-6 pt-2 z-40 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
         >
           <div className="py-1" role="none">
             {/* Dropdown Items */}
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            <Link
+              to="/stay"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
               role="menuitem"
             >
-              Profile
+              <FaHotel className="text-lg"/>
+              <span>Stays</span>
+            </Link>
+            <Link
+              to="/flight"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
+              role="menuitem"
+            >
+              <GiCommercialAirplane className="text-lg" />
+              <span>Flights</span>
+            </Link>
+            <Link
+              to="/cars"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
+              role="menuitem"
+            >
+              <FaCar className="text-lg"/>
+              <span>Cars</span>
+            </Link>
+            <Link
+              to="/packages"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
+              role="menuitem"
+            >
+              <FaTruckPlane className="text-lg"/>
+              <span>Packages</span>
+            </Link>
+            <Link
+              to="/thingtodo"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
+              role="menuitem"
+            >
+              <FaVrCardboard className="text-lg" />
+              <span>Things to do</span>
+            </Link>
+            <Link
+              to="/cruises"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
+              role="menuitem"
+            >
+              <GiCruiser className="text-lg" />
+              <span>Cruises</span>
+            </Link>
+            <hr />
+            <Link
+              to=""
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
+              role="menuitem"
+            >
+              Deals
+            </Link>
+            <a
+              href="#"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
+              role="menuitem"
+            >
+              Groups & meetings
             </a>
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
               role="menuitem"
             >
-              Settings
+              Expedia magazine
             </a>
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="flex justify-start items-center gap-4 p-4 text-sm font-medium text-gray-800 hover:bg-gray-100"
               role="menuitem"
             >
-              Logout
+              One Key credit cards
             </a>
           </div>
         </div>

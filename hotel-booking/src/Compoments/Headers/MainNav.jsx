@@ -3,6 +3,7 @@ import Dropdown from './DropDown'
 import { MdDownload, MdMessage } from "react-icons/md";
 import { BsGlobe } from "react-icons/bs";
 import { FaUserCircle } from 'react-icons/fa';
+import { Link } from "react-router-dom"
 
 const MainNav = () => {
     return (
@@ -10,10 +11,10 @@ const MainNav = () => {
             <div className='hidden md:block'>
             <div className='flex justify-around items-center w-full bg-white z-50 shadow-sm border-b border-gray-200 py-4'>
                 <div className='flex justify-start items-center gap-4'>
-                    <div className='flex justify-start items-center gap-3'>
+                    <Link to='/mainhome' className='flex justify-start items-center gap-3'>
                         <img src="/logo.png" alt="" className='w-8 h-8' />
                         <h1 className='font-medium text-2xl'>StayEase</h1>
-                    </div>
+                    </Link>
                     <div>
                         <Dropdown />
                     </div>
@@ -21,7 +22,7 @@ const MainNav = () => {
                 <div className='flex justify-start items-center gap-4'>
                     <button className='font-semibold border border-gray-600 rounded-lg px-3 py-2 flex justify-start items-center gap-2'><MdDownload /> Get The App</button>
                     <button className='font-semibold rounded-lg px-3 py-2 flex justify-start items-center gap-2'><BsGlobe /> English</button>
-                    <p className=''>List Your Property</p>
+                    <Link to='/listproperty' className=''>List Your Property</Link>
                     <p className=''>Support</p>
                     <p className=''>Trips</p>
                     <p className=' text-2xl'><MdMessage />

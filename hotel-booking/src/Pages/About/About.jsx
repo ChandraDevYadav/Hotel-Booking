@@ -61,15 +61,6 @@ const hotelFilters = [
     ],
   },
   {
-    category: "One Key Benefits and Discounts",
-    filters: [
-      { name: "Member prices", type: "checkbox" },
-      { name: "VIP Access properties", count: 3, type: "checkbox" },
-      { name: "Discounted properties", type: "checkbox" },
-      { name: "Black Friday sale", type: "checkbox" },
-    ],
-  },
-  {
     category: "Guest Rating",
     filters: [
       { name: "Any", type: "radio" },
@@ -109,6 +100,15 @@ const hotelFilters = [
     category: "Availability",
     filters: [
       { name: "Only show available properties", type: "checkbox" },
+    ],
+  },
+  {
+    category: "One Key Benefits and Discounts",
+    filters: [
+      { name: "Member prices", type: "checkbox" },
+      { name: "VIP Access properties", count: 3, type: "checkbox" },
+      { name: "Discounted properties", type: "checkbox" },
+      { name: "Black Friday sale", type: "checkbox" },
     ],
   },
 ];
