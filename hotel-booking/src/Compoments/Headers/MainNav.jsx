@@ -22,7 +22,7 @@ const MainNav = () => {
                 <div className='flex justify-start items-center gap-4'>
                     <button className='font-semibold border border-gray-600 rounded-lg px-3 py-2 flex justify-start items-center gap-2'><MdDownload /> Get The App</button>
                     <button className='font-semibold rounded-lg px-3 py-2 flex justify-start items-center gap-2'><BsGlobe /> English</button>
-                    <Link to='/listproperty' className=''>List Your Property</Link>
+                    <Link to='/https://hotel-booking-hotelgroup.onrender.com/' className=''>List Your Property</Link>
                     <p className=''>Support</p>
                     <p className=''>Trips</p>
                     <p className=' text-2xl'><MdMessage />
