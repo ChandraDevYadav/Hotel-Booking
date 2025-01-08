@@ -14,6 +14,8 @@ import Cars from './Pages/Cars/Cars';
 import Packages from './Pages/Packages/Packages';
 import ThingToDo from './Pages/ThingToDo/ThingToDo';
 import Cruises from './Pages/Cruises/Cruises';
+import Support from './Pages/Support/Support';
+import Trip from './Pages/Trip/Trip';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path='/Packages' element={<Packages />} />
         <Route path='/thingtodo' element={<ThingToDo />} />
         <Route path='/cruises' element={<Cruises />} />
+        <Route path='/support' element={<Support />} />
+        <Route path='/trip' element={<Trip />} />
       </Routes>
     </>
   )

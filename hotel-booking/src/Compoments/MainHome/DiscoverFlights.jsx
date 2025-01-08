@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { GiCommercialAirplane } from "react-icons/gi";
 
 
@@ -164,9 +165,9 @@ const DiscoverFlights = () => {
         {showPrev && (
           <button
             onClick={() => handleScroll("left")}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white p-2 rounded-full shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-800 px-2 py-2 rounded-full shadow-md hover:bg-blue-700 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
-            Prev
+            <FaAngleLeft/>
           </button>
         )}
         <div
@@ -211,9 +212,9 @@ const DiscoverFlights = () => {
         </div>
         <button
           onClick={() => handleScroll("right")}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white p-2 rounded-full shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-800 px-2 py-2 rounded-full shadow-md hover:bg-blue-700 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
-          Next
+          <FaAngleRight/>
         </button>
       </div>
       <div className="flex justify-between items-center py-2">

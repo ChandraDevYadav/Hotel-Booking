@@ -6,14 +6,14 @@ import OneWayDatePicker from './OneWayDatePicker'
 const OneWay = () => {
   return (
     <div>
-        <div className='flex justify-start items-center gap-4 py-4'>
-            <div>
+        <div className='flex flex-col md:flex-row justify-start items-center gap-4 py-4'>
+            <div className='w-full'>
                 <FlightSearch/>
             </div>
-            <div className=''>
+            <div className='w-full'>
                 <OneWayDatePicker/>
             </div>
-            <div className=''>
+            <div className='w-full'>
                 <PersonPicker/>
             </div>
             <div>

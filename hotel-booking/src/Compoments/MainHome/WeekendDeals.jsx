@@ -35,8 +35,8 @@ const WeekendDeals = () => {
 
     return (
         <div className="container my-6">
-            <h2 className="text-2xl font-bold mb-1 text-gray-800">Last-Minute Weekend Deals</h2>
-            <p className="text-gray-600 font-medium text-md mb-6"><span className="text-sm">Showing deals for</span> : Dec 20 - Dec 22</p>
+            <h2 className="text-xl md:text-2xl font-bold mb-1 text-gray-800">Last-Minute Weekend Deals</h2>
+            <p className="text-gray-600 font-medium text-md mb-2 md:mb-6"><span className="text-sm">Showing deals for</span> : Dec 20 - Dec 22</p>
             <div className="relative group">
                 {showPrev && (
                     <button

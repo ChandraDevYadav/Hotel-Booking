@@ -18,7 +18,7 @@ import SocialSection from '../../Compoments/Room/SocialSection'
 
 const MainHome = () => {
   return (
-    <div className='px-40'>
+    <div className='px-4 md:px-40'>
         <MainTabs/>
         <Deals/>
         <TravelCard/>

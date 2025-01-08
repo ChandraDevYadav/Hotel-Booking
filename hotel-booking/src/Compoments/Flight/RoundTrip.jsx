@@ -6,18 +6,18 @@ import PersonPicker from './PersonPicker'
 const RoundTrip = () => {
   return (
     <div>
-        <div className='flex justify-start items-center gap-4 py-4'>
-            <div>
+        <div className='flex flex-col md:flex-row justify-start items-center gap-4 py-4'>
+            <div className='w-full'>
                 <FlightSearch/>
             </div>
-            <div className=''>
+            <div className='w-full'>
                 <FlightDatePicker/>
             </div>
-            <div className=''>
+            <div className='w-full'>
                 <PersonPicker/>
             </div>
-            <div>
-                <button className='text-white bg-blue-600 px-10 py-3 rounded-md font-medium'>Search</button>
+            <div className=''>
+                <button className='text-white bg-blue-600 w-full px-10 py-3 rounded-md font-medium'>Search</button>
             </div>
         </div>
         <div className='flex justify-start items-center gap-4 pb-4'>

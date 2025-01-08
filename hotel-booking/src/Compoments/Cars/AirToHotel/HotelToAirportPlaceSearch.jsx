@@ -85,7 +85,7 @@ const HotelToAirportPlaceSearch = () => {
 
   return (
     <div className="w-full">
-      <div className="flex items-center space-x-4 w-full">
+      <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 space-x-0 md:space-x-4 w-full">
         {/* Leaving From Input */}
         <div className="w-full">
         <PlacesSearchDropdown

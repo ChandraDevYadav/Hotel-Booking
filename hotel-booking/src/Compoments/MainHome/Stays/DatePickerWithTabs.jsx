@@ -89,12 +89,12 @@ const DatePicker = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="">
       {/* Date Display */}
       <div className="relative">
         <button
           onClick={togglePicker}
-          className="w-full pl-4 pr-14 py-[7px] bg-white border border-black rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex justify-start items-center gap-3"
+          className="w-full pl-4 pr-14 py-1 bg-white border border-black rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex justify-start items-center gap-3"
         >
           <LuCalendarDays />
           <div className="text-start">

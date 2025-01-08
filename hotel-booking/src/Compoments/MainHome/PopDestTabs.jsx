@@ -8,7 +8,7 @@ const PopDestTabs = () => {
         { name: "Culture", key: "culture" },
         { name: "Ski", key: "ski" },
         { name: "Family", key: "family" },
-        { name: "Wellness and Relaxation", key: "wellness" },
+        { name: "Fitness", key: "wellness" },
     ];
 
     const [activeTab, setActiveTab] = useState("beach");
@@ -41,7 +41,7 @@ const PopDestTabs = () => {
     return (
         <div className="mt-4">
             {/* Tab Buttons */}
-            <div className="flex space-x-4 border-b">
+            <div className="flex space-x-4 overflow-x-scroll scrollbar-hide border-b">
                 {tabCategories.map((tab) => (
                     <button
                         key={tab.key}

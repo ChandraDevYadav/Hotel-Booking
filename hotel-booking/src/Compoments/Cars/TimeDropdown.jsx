@@ -12,7 +12,7 @@ const TimeDropdown = ({ label }) => {
         "05:00 AM", "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM",
         "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM",
         "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM",
-        "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM"
+        "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM",
     ];
 
     const toggleDropdown = () => {
@@ -39,14 +39,18 @@ const TimeDropdown = ({ label }) => {
     }, []);
 
     return (
-        <div ref={dropdownRef} className="relative inline-block text-left w-48">
-            
+        <div ref={dropdownRef} className="relative inline-block text-left w-full md:w-64">
             <button
                 onClick={toggleDropdown}
-                className="flex justify-between items-center w-full px-4 py-[13px] bg-white text-sm font-medium text-gray-700 border border-black rounded-lg shadow-sm focus:outline-none"
+                className="flex flex-col justify-center items-start w-full px-4 py-[6px] bg-white text-sm font-medium text-gray-700 border border-black rounded-lg shadow-sm focus:outline-none"
             >
-                {label}
-                <span className="ml-2"><FaAngleDown/></span> {/* Down Arrow */}
+                <span className="text-gray-800 text-xs font-medium">{label}</span> {/* Label on the first line */}
+                <span className="text-gray-900 text-sm font-semibold">
+                    {selectedTime}
+                </span> {/* Selected time on the second line */}
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                    <FaAngleDown />
+                </span>
             </button>
 
             {isOpen && (

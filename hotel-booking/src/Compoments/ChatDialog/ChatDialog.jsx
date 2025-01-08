@@ -84,7 +84,7 @@ const ChatDialog = () => {
         <>
             {/* Chat button */}
             <button
-                className="fixed bottom-4 right-4 flex justify-start items-center gap-2 bg-blue-500 text-white py-3 px-4 rounded-full shadow-lg"
+                className="fixed bottom-4 right-2 md:right-4 flex justify-start items-center gap-2 bg-blue-500 text-white py-3 px-4 rounded-full shadow-lg"
                 onClick={openDialog}
             >
                 <MdOutlineMessage />

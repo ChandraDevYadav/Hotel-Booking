@@ -89,7 +89,7 @@ const CruisesDate = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="">
       {/* Date Display */}
       <div className="relative">
         <button

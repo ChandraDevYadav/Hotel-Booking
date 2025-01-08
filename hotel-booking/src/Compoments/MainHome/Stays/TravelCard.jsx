@@ -77,7 +77,7 @@ const TravelCard = () => {
 
   return (
     <div className="">
-      <h1 className="text-3xl font-semibold mb-6">Your recent searches</h1>
+      <h1 className="text-xl md:text-3xl font-semibold mb-2 md:mb-6">Your recent searches</h1>
       <div
         className="relative"
         onMouseEnter={() => setIsHovered(true)}
@@ -114,7 +114,7 @@ const TravelCard = () => {
               className="flex justify-start items-center flex-shrink-0 w-[17.3rem] gap-4 bg-[#eff3f7] rounded-xl px-6 py-4 border border-gray-300 hover:shadow-md transition"
             >
                 <div>
-                    <FaHotel className="text-xl"/>
+                    <FaHotel className="text-3xl md:text-xl"/>
                 </div>
               <div>
               <h2 className="text-md font-bold text-gray-800">{item.title}</h2>

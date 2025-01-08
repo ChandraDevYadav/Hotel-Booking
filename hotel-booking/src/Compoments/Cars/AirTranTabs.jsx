@@ -26,9 +26,9 @@ const AirTranTabs = () => {
     };
 
     return (
-        <div className="mt-4">
+        <div className="mt-0 md:mt-4 px-0 sm:px-6 md:px-8">
             {/* Tab Buttons with Dropdown */}
-            <div className="flex justify-start items-center gap-4 mb-4 pb-4">
+            <div className="flex justify-start items-center gap-4 mb-0 md:mb-4 pb-4">
                 <Tabs tabs={tabCategories} activeTabKey={activeTab} onTabClick={handleTabClick} />
             </div>
 

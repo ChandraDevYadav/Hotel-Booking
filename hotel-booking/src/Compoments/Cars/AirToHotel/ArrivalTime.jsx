@@ -78,7 +78,7 @@ const PickupDropoffTime = () => {
     return (
         <div className="w-full flex justify-start items-center gap-4">
             <ArrivalTime label="Flight arrival Time" />
-            <ArrivalTime label="Flight departure Time" />
+            {/* <ArrivalTime label="Flight departure Time" /> */}
         </div>
     );
 };

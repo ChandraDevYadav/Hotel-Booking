@@ -20,38 +20,38 @@ const MultiCity = () => {
     };
 
     return (
-        <div>
-            <div className='flex justify-start items-center gap-4 pt-4'>
-                <div>
+        <div className="px-1 sm:px-2 md:px-8">
+            <div className="flex justify-start items-center gap-4 pt-4">
+                <div className='w-full'>
                     <PersonPicker />
                 </div>
             </div>
             {flights.map((flight) => (
-                <div key={flight.id}>
-                    <div className='flex justify-start items-center gap-4'>
-                        <h1 className='font-medium mt-6 mb-3'>Flight {flight.id}</h1>
+                <div key={flight.id} className="mt-6">
+                    <div className="flex justify-start items-center gap-4">
+                        <h1 className="font-medium mt-6 mb-3">Flight {flight.id}</h1>
                         {flight.id > 2 && ( // Show remove button only for flights with id > 2
                             <button
-                                className='text-red-600 font-medium'
+                                className="text-red-600 font-medium text-sm"
                                 onClick={() => removeFlight(flight.id)}
                             >
                                 Remove
                             </button>
                         )}
                     </div>
-                    <div className='flex justify-start items-center gap-6'>
-                        <div className='w-full'>
+                    <div className="flex flex-col sm:flex-row justify-start items-center gap-6">
+                        <div className="w-full sm:w-1/2">
                             <FlightSearch />
                         </div>
-                        <div className='w-1/2'>
+                        <div className="w-full sm:w-1/2">
                             <OneWayDatePicker />
                         </div>
                     </div>
                 </div>
             ))}
-            <div className='flex justify-start items-center gap-4 py-4'>
+            <div className="flex justify-start items-center gap-4 py-4">
                 <button
-                    className='text-blue-600 text-sm flex justify-start items-center gap-2'
+                    className="text-blue-600 text-sm flex justify-start items-center gap-2"
                     onClick={addFlight}
                 >
                     <FaPlus /> Add Another Flight
