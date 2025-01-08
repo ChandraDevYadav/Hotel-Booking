@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const RecentlyViewed = () => {
   const propertiesData = [
@@ -37,7 +38,7 @@ const RecentlyViewed = () => {
   return (
     <div className="max-w-7xl mx-auto py-6">
       <h1 className="text-xl md:text-3xl font-semibold mb-2 md:mb-4">Your Recently Viewed Properties</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <Link to='mainhome' className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {propertiesData.map((property, index) => (
           <div
             key={index}
@@ -66,7 +67,7 @@ const RecentlyViewed = () => {
             </div>
           </div>
         ))}
-      </div>
+      </Link>
     </div>
   );
 };

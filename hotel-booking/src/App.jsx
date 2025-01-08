@@ -21,11 +21,11 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<MainHome />} />
         <Route path='/about' element={<About />} />
         <Route path='/hoteldetail' element={<HotelDetail />} />
         <Route path='/payment' element={<Payment />} />
-        <Route path='/mainhome' element={<MainHome />} />
+        <Route path='/mainhome' element={<Home />} />
         <Route path='/listproperty' element={<ListYourProperty />} />
         <Route path='/stay' element={<Stay />} />
         <Route path='/flight' element={<Flight />} />
