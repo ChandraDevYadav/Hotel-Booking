@@ -25,6 +25,9 @@ const hotelSchema = new mongoose.Schema(
       website: String,
     },
     isActive: { type: Boolean, default: true },
+    // ✅ Added: room.Controller.js uses $push / $pull on this array
+    rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room" }],
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true },
 );

@@ -12,8 +12,16 @@ import {
 
 const router = express.Router();
 
+// ⚠️  Static named routes MUST come before /:id  — otherwise Express
+//     matches "hotel" as an ID value and getRoomsByHotel is never reached.
+
+// Static sub-resource route (before dynamic /:id)
+router.get("/hotel/:hotelId", getRoomsByHotel);
+
+// Collection
 router.route("/").get(getRooms).post(protect, admin, createRoom);
 
+// Document (dynamic segment last)
 router
   .route("/:id")
   .get(getRoom)
@@ -21,6 +29,5 @@ router
   .delete(protect, admin, deleteRoom);
 
 router.patch("/:id/availability", protect, admin, updateRoomAvailability);
-router.get("/hotel/:hotelId", getRoomsByHotel);
 
 export default router;

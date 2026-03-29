@@ -1,19 +1,20 @@
 import express from "express";
+import { protect } from "../middleware/auth.Middleware.js";
+import {
+  createStaySearch,
+  getAllStaySearches,
+  getStayById,
+  deleteStaySearch,
+} from "../controllers/stay.Controller.js";
 
 const router = express.Router();
 
-// @desc    Get all stays/hotels
-// @route   GET /api/stays
-// @access  Public
-router.get("/", (req, res) => {
-  res.json({ message: "Get all stays endpoint" });
-});
+// @route   GET  /api/stays        — list all searches (admin-style)
+// @route   POST /api/stays        — create a new search entry
+router.route("/").get(getAllStaySearches).post(protect, createStaySearch);
 
-// @desc    Get single stay
-// @route   GET /api/stays/:id
-// @access  Public
-router.get("/:id", (req, res) => {
-  res.json({ message: `Get stay ${req.params.id}` });
-});
+// @route   GET    /api/stays/:id  — single search
+// @route   DELETE /api/stays/:id  — remove search
+router.route("/:id").get(getStayById).delete(protect, deleteStaySearch);
 
 export default router;

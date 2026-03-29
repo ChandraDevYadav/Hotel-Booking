@@ -2,17 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize";
 import rateLimit from "express-rate-limit";
 import hpp from "hpp";
-import xss from "xss-clean";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Import database connection
 import connectDB from "./config/db.js";
-
-// Import routes
 import authRoutes from "./routes/auth.Routes.js";
 import stayRoutes from "./routes/stay.Routes.js";
 import hotelRoutes from "./routes/hotel.Routes.js";
@@ -20,38 +15,88 @@ import roomRoutes from "./routes/room.Routes.js";
 import bookingRoutes from "./routes/booking.Routes.js";
 import paymentRoutes from "./routes/payment.Routes.js";
 
-// Load environment variables
 dotenv.config();
-
-// Connect to database
 connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
-// ES Module fix for __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ================= SECURITY MIDDLEWARE =================
-
-// Set security headers
+// ── Security headers ──────────────────────────────────────────────────────
 app.use(helmet());
 
-// Prevent NoSQL injection
-app.use(mongoSanitize());
+// ── Body parsing (must come before sanitizers that read req.body) ─────────
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// Prevent XSS attacks
-app.use(xss());
+// ── Sanitization ──────────────────────────────────────────────────────────
+// express-mongo-sanitize and xss-clean both try to *reassign* req.query /
+// req.params, which Express 5 made read-only (they are now getters only).
+// Solution: mutate the *contents* of each object in-place instead.
 
-// Prevent HTTP parameter pollution
+function mongoSanitizeValue(value) {
+  if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+    for (const key of Object.keys(value)) {
+      if (key.startsWith("$") || key.includes(".")) {
+        delete value[key];
+      } else {
+        mongoSanitizeValue(value[key]);
+      }
+    }
+  } else if (Array.isArray(value)) {
+    value.forEach(mongoSanitizeValue);
+  }
+  return value;
+}
+
+function xssSanitizeValue(value) {
+  if (typeof value === "string") {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#x27;");
+  }
+  if (Array.isArray(value)) return value.map(xssSanitizeValue);
+  if (value !== null && typeof value === "object") {
+    for (const key of Object.keys(value)) {
+      value[key] = xssSanitizeValue(value[key]);
+    }
+    return value;
+  }
+  return value;
+}
+
+app.use((req, _res, next) => {
+  if (req.body && typeof req.body === "object") {
+    mongoSanitizeValue(req.body);
+    xssSanitizeValue(req.body);
+  }
+  for (const key of Object.keys(req.query)) {
+    const clean = xssSanitizeValue(
+      mongoSanitizeValue({ [key]: req.query[key] }),
+    );
+    req.query[key] = clean[key];
+  }
+  for (const key of Object.keys(req.params)) {
+    if (typeof req.params[key] === "string") {
+      req.params[key] = xssSanitizeValue(req.params[key]);
+    }
+  }
+  next();
+});
+
+// ── HTTP parameter pollution ──────────────────────────────────────────────
 app.use(hpp());
 
-// Rate limiting (prevent brute force)
+// ── Rate limiting ─────────────────────────────────────────────────────────
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === "production" ? 100 : 1000, // Limit requests per IP
+  windowMs: 15 * 60 * 1000,
+  max: NODE_ENV === "production" ? 100 : 1000,
   message: {
     message: "Too many requests from this IP, please try again later.",
   },
@@ -60,8 +105,7 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 
-// ================= CORS CONFIGURATION =================
-
+// ── CORS ──────────────────────────────────────────────────────────────────
 const corsOptions = {
   origin: process.env.FRONTEND_URL?.split(",") || [
     "http://localhost:3000",
@@ -73,23 +117,16 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// ================= BODY PARSING MIDDLEWARE =================
-
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
-// ================= REQUEST LOGGING (Dev Only) =================
-
+// ── Dev request logging ───────────────────────────────────────────────────
 if (NODE_ENV === "development") {
-  app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url} - ${new Date().toISOString()}`);
+  app.use((req, _res, next) => {
+    console.log(`${req.method} ${req.url} — ${new Date().toISOString()}`);
     next();
   });
 }
 
-// ================= HEALTH CHECK ENDPOINT =================
-
-app.get("/api/health", (req, res) => {
+// ── Health check ──────────────────────────────────────────────────────────
+app.get("/api/health", (_req, res) => {
   res.status(200).json({
     status: "OK",
     message: "Hotel Booking API is running",
@@ -98,13 +135,11 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// ================= ROOT ENDPOINT =================
-
-app.get("/", (req, res) => {
+// ── Root ──────────────────────────────────────────────────────────────────
+app.get("/", (_req, res) => {
   res.json({
-    message: "🏨 Hotel Booking API",
+    message: "Hotel Booking API",
     version: "1.0.0",
-    documentation: "/api/docs", // Future: Add Swagger
     endpoints: {
       auth: "/api/auth",
       stays: "/api/stays",
@@ -116,8 +151,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// ================= API ROUTES =================
-
+// ── Routes ────────────────────────────────────────────────────────────────
 app.use("/api/auth", authRoutes);
 app.use("/api/stays", stayRoutes);
 app.use("/api/hotels", hotelRoutes);
@@ -125,13 +159,9 @@ app.use("/api/rooms", roomRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/payments", paymentRoutes);
 
-// ================= SERVE STATIC FILES (Production) =================
-
+// ── Static (production) ───────────────────────────────────────────────────
 if (NODE_ENV === "production") {
-  // Serve frontend static files if built
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-  // Handle React Router - serve index.html for all non-API routes
   app.get("*", (req, res) => {
     if (!req.url.startsWith("/api")) {
       res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"));
@@ -139,9 +169,8 @@ if (NODE_ENV === "production") {
   });
 }
 
-// ================= 404 HANDLER =================
-
-app.use((req, res, next) => {
+// ── 404 ───────────────────────────────────────────────────────────────────
+app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: `Route not found: ${req.originalUrl}`,
@@ -149,110 +178,61 @@ app.use((req, res, next) => {
   });
 });
 
-// ================= GLOBAL ERROR HANDLER =================
-
-app.use((err, req, res, next) => {
-  console.error("❌ Error:", {
+// ── Global error handler ──────────────────────────────────────────────────
+app.use((err, req, res, _next) => {
+  console.error("Error:", {
     name: err.name,
     message: err.message,
-    stack: NODE_ENV === "development" ? err.stack : undefined,
     path: req.path,
-    method: req.method,
   });
-
-  // Mongoose bad ObjectId
-  if (err.name === "CastError") {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid resource ID",
-      error: "BAD_REQUEST",
-    });
-  }
-
-  // Mongoose duplicate key
+  if (err.name === "CastError")
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid resource ID" });
   if (err.code === 11000) {
     const field = Object.keys(err.keyValue)[0];
     return res.status(400).json({
       success: false,
       message: `Duplicate value: ${field} already exists`,
-      error: "DUPLICATE_ENTRY",
     });
   }
-
-  // Mongoose validation error
   if (err.name === "ValidationError") {
     const messages = Object.values(err.errors).map((e) => e.message);
-    return res.status(400).json({
-      success: false,
-      message: "Validation failed",
-      errors: messages,
-      error: "VALIDATION_ERROR",
-    });
+    return res
+      .status(400)
+      .json({ success: false, message: "Validation failed", errors: messages });
   }
-
-  // JWT errors
-  if (err.name === "JsonWebTokenError") {
-    return res.status(401).json({
-      success: false,
-      message: "Invalid token",
-      error: "INVALID_TOKEN",
-    });
-  }
-
-  if (err.name === "TokenExpiredError") {
-    return res.status(401).json({
-      success: false,
-      message: "Token expired",
-      error: "TOKEN_EXPIRED",
-    });
-  }
-
-  // Default error
+  if (err.name === "JsonWebTokenError")
+    return res.status(401).json({ success: false, message: "Invalid token" });
+  if (err.name === "TokenExpiredError")
+    return res.status(401).json({ success: false, message: "Token expired" });
   res.status(err.statusCode || 500).json({
     success: false,
     message: err.message || "Internal server error",
-    error: err.statusCode ? "APPLICATION_ERROR" : "SERVER_ERROR",
     ...(NODE_ENV === "development" && { stack: err.stack }),
   });
 });
 
-// ================= GRACEFUL SHUTDOWN =================
-
+// ── Start ─────────────────────────────────────────────────────────────────
 const server = app.listen(PORT, () => {
   console.log(
     `
-🚀 Server running in ${NODE_ENV} mode
-📍 Port: ${PORT}
-🔗 API Base: http://localhost:${PORT}/api
-🏨 Hotel Booking API v1.0.0
+Server running in ${NODE_ENV} mode
+Port: ${PORT}
+API Base: http://localhost:${PORT}/api
   `.trim(),
   );
 });
 
-// Handle unhandled promise rejections
 process.on("unhandledRejection", (err) => {
-  console.error("❌ Unhandled Rejection:", err);
-  server.close(() => {
-    process.exit(1);
-  });
+  console.error("Unhandled Rejection:", err);
+  server.close(() => process.exit(1));
 });
-
-// Handle SIGTERM for graceful shutdown (e.g., from Docker/Kubernetes)
 process.on("SIGTERM", () => {
-  console.log("🔄 SIGTERM received. Shutting down gracefully...");
-  server.close(() => {
-    console.log("✅ Process terminated");
-    process.exit(0);
-  });
+  server.close(() => process.exit(0));
 });
-
-// Handle SIGINT (Ctrl+C)
 process.on("SIGINT", () => {
-  console.log("🔄 SIGINT received. Shutting down gracefully...");
-  server.close(() => {
-    console.log("✅ Process terminated");
-    process.exit(0);
-  });
+  server.close(() => process.exit(0));
 });
 
 export default app;

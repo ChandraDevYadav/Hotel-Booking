@@ -14,17 +14,23 @@ import {
 
 const router = express.Router();
 
-// User routes
+// ⚠️  Static named routes MUST come before /:id  — otherwise Express
+//     matches "upcoming" and "stats" as ID values and never reaches these handlers.
+
+// Admin stats
+router.get("/stats", protect, admin, getBookingStats);
+
+// User upcoming bookings
+router.get("/upcoming", protect, getUpcomingBookings);
+
+// Collection routes
 router.route("/").get(protect, getBookings).post(protect, createBooking);
 
+// Document routes (dynamic segment last)
 router.route("/:id").get(protect, getBooking).put(protect, updateBooking);
 
 router.patch("/:id/cancel", protect, cancelBooking);
-router.get("/upcoming", protect, getUpcomingBookings);
-
-// Admin routes
 router.patch("/:id/confirm", protect, admin, confirmBooking);
 router.delete("/:id", protect, admin, deleteBooking);
-router.get("/stats", protect, admin, getBookingStats);
 
 export default router;
